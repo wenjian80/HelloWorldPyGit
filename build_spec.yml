@@ -1,0 +1,25 @@
+version: 0.1
+component: build
+timeoutInSeconds: 6000
+runAs: root
+shell: bash
+env:
+
+  exportedVariables:
+    - version
+
+steps:
+  - type: Command
+    name: "Pack the product in zip format"
+    command: |
+      mkdir target
+      cp app.py requirements.txt target
+      zip gs_python.zip target/*
+      version=`cat ./version.txt`
+
+outputArtifacts:
+  - name: gs_python
+    type: BINARY
+    location: gs_python.zip
+
+
